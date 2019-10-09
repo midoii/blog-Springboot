@@ -56,13 +56,13 @@
 
 ![1](img/1.png)
 
-![avatar](D:\java_blog\img\7.png)
+![avatar](img/7.png)
 
 在两处地方修改成自己服务器的地址或者域名，例如填写为`xx.xx.xx.xx:4677`
 
 修改`common/upload/upCover.vue`，在第14行处，和前面一样修改域名，三者都可以填写同一个地址
 
-![avatar](D:\java_blog\img\8.png)
+![avatar](img/8.png)
 
 3.在下面Terminal处输入`npm install -g vue-cli`，就会自动安装相关依赖（需要先安装node.js）
 
