@@ -23,15 +23,15 @@ public class AdminController {
     /*
     * 创建后台登陆账号
     * */
-//    @PostMapping("create")
-//    public ResponseEntity<String> createAdmin(
-//            @RequestParam(value = "username") String username,
-//            @RequestParam(value = "password") String password
-//    ){
-//        ReturnJson json = adminService.createAdmin(username, password);
-//        String output = JsonUtils.serialize(json);
-//        return ResponseEntity.ok(output);
-//    }
+    @PostMapping("create")
+    public ResponseEntity<String> createAdmin(
+            @RequestParam(value = "username") String username,
+            @RequestParam(value = "password") String password
+    ){
+        ReturnJson json = adminService.createAdmin(username, password);
+        String output = JsonUtils.serialize(json);
+        return ResponseEntity.ok(output);
+    }
 
     @PostMapping("login")
     public ResponseEntity<String> certifyAdminMsg(

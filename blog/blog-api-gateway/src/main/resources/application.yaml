@@ -16,6 +16,10 @@ zuul:
       path: /apex/**
       serviceId: item-service
       strip-prefix: true
+    upload-service:
+      path: /upload/**
+      serviceId: upload-service
+      strip-prefix: false
 
 
 ribbon:

@@ -5,7 +5,7 @@ spring:
     name: item-service
   datasource:
     url: jdbc:mysql://localhost:3306/数据库名?useUnicode=true&characterEncoding=utf-8&useSSL=false&allowPublicKeyRetrieval=true
-    username: 账号
+    username: 用户名
     password: 密码
     hikari:
       maximum-pool-size: 30
