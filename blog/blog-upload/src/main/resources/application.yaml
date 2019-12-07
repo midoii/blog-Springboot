@@ -28,3 +28,7 @@ fdfs:
     height: 60
   tracker-list: # tracker地址
     - 172.17.26.50:22122
+
+logging:
+  level:
+    root: warn

@@ -1,5 +1,7 @@
 server:
   port: 10010
+  tomcat:
+    basedir: /home/temp
 spring:
   application:
     name: api-gateway
@@ -35,3 +37,6 @@ hystrix:
         isolation:
           thread:
             timeoutInMillisecond: 10000 # 熔断超时时长：10000ms
+logging:
+  level:
+    root: warn
