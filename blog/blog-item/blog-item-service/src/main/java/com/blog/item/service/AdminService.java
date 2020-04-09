@@ -1,7 +1,6 @@
 package com.blog.item.service;
 
 
-import com.blog.common.back.ListTemplate;
 import com.blog.common.back.ReturnJson;
 import com.blog.common.utils.GetRandomString;
 import com.blog.item.mapper.AdminMapper;
@@ -23,36 +22,36 @@ public class AdminService {
     @Autowired
     private AdminMapper adminMapper;
 
-//    public ReturnJson createAdmin(String username, String password){
-//        if(username.length() == 0){
-//            ReturnJson<String> returnJson =
-//                    new ReturnJson<>(false, -4002, "用户名不能为空", "");
-//            return returnJson;
-//        }
-//        if(password.length() < 6){
-//            ReturnJson<String> returnJson =
-//                    new ReturnJson<>(false, -4002, "密码不能少于6位", "");
-//            return returnJson;
-//        }
-//        MessageDigest messageDigest = null;
-//        Admin admin = new Admin();
-//        admin.setUsername(username);
-//        admin.setUserId(GetRandomString.getRandomString(22));
-//        admin.setCreateTime((new Date().getTime())/1000);
-//        admin.setStatus(0);
-//        try {
-//            messageDigest = MessageDigest.getInstance("MD5");
-//            String salt = GetRandomString.getRandomString(60);
-//            admin.setSalt(salt);
-//            messageDigest.update((password + salt).getBytes());
-//            String s = new BigInteger(1, messageDigest.digest()).toString(16);
-//            admin.setPassword(s);
-//        } catch (NoSuchAlgorithmException e) {
-//            e.printStackTrace();
-//        }
-//        adminMapper.insert(admin);
-//        return new ReturnJson<>(true, 200, "创建用户成功", "");
-//    }
+    public ReturnJson createAdmin(String username, String password) {
+        if (username.length() == 0) {
+            ReturnJson<String> returnJson =
+                    new ReturnJson<>(false, -4002, "用户名不能为空", "");
+            return returnJson;
+        }
+        if (password.length() < 6) {
+            ReturnJson<String> returnJson =
+                    new ReturnJson<>(false, -4002, "密码不能少于6位", "");
+            return returnJson;
+        }
+        MessageDigest messageDigest = null;
+        Admin admin = new Admin();
+        admin.setUsername(username);
+        admin.setUserId(GetRandomString.getRandomString(22));
+        admin.setCreateTime((new Date().getTime()) / 1000);
+        admin.setStatus(0);
+        try {
+            messageDigest = MessageDigest.getInstance("MD5");
+            String salt = GetRandomString.getRandomString(60);
+            admin.setSalt(salt);
+            messageDigest.update((password + salt).getBytes());
+            String s = new BigInteger(1, messageDigest.digest()).toString(16);
+            admin.setPassword(s);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        adminMapper.insert(admin);
+        return new ReturnJson<>(true, 200, "创建用户成功", "");
+    }
 
     public ReturnJson verifyAdminMsg(String username, String password){
         if(username.length() == 0){

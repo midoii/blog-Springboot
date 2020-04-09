@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface ArticleMapper  extends Mapper<Article> {
     @Select("SELECT COUNT(*) FROM article WHERE status = #{status}")
-    int queryNumByStatus(int status);
+    int queryNumByStatus(@Param("status") int status);
 
     @Select("SELECT * FROM article WHERE status = #{status}" +
             " ORDER BY publish_time DESC")

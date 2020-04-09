@@ -9,7 +9,6 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
@@ -49,7 +48,8 @@ public class ArticleService {
             Example.Criteria criteria = example.createCriteria();
             criteria.andEqualTo("status", status);
             List<Article> articles = articleMapper.selectByExample(example);
-            ListTemplate<List<Article>> listTemplate = new ListTemplate<>(page, pageSize, articles.size(), articles);
+            ListTemplate<List<Article>> listTemplate = new ListTemplate<>(page, pageSize,
+                    articleMapper.queryNumByStatus(status), articles);
             return new ReturnJson<>(true, 200, "success", listTemplate);
         }
         return new ReturnJson<>(false, -1, "status值不正确", new ListTemplate<>());

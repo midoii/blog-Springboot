@@ -6,6 +6,8 @@ spring:
   servlet:
     multipart:
       max-file-size: 5MB #限制文件上传大小
+      location: /data/tmp
+      enabled: true
 
 eureka:
   client:

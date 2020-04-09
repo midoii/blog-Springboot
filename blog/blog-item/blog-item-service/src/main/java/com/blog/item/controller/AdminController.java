@@ -1,7 +1,6 @@
 package com.blog.item.controller;
 
 
-import com.blog.common.back.ListTemplate;
 import com.blog.common.back.ReturnJson;
 import com.blog.common.utils.JsonUtils;
 import com.blog.item.service.AdminService;
@@ -20,7 +19,7 @@ public class AdminController {
     private AdminService adminService;
 
 
-    /*
+    /**
     * 创建后台登陆账号
     * */
 //    @PostMapping("create")

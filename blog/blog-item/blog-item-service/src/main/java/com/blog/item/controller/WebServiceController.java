@@ -4,8 +4,10 @@ package com.blog.item.controller;
 import com.blog.common.back.ReturnJson;
 import com.blog.common.utils.JsonUtils;
 import com.blog.item.service.ArticleService;
+import com.blog.item.service.CacheService;
 import com.blog.item.service.CommentsService;
 import com.blog.item.service.WebService;
+import org.apache.ibatis.annotations.CacheNamespace;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 * */
 @RestController
 @RequestMapping("w")
+@CacheNamespace(blocking = true)
 public class WebServiceController {
 
     @Autowired
@@ -25,6 +28,9 @@ public class WebServiceController {
 
     @Autowired
     private ArticleService articleService;
+
+    @Autowired
+    private CacheService cacheService;
 
     /*
     * 关于我的界面
@@ -63,19 +69,26 @@ public class WebServiceController {
     @GetMapping("article/list")
     public ResponseEntity getArticleList(
             @RequestParam("page") Integer page,
-            @RequestParam("pageSize") Integer pageSize,
-            @RequestParam(value = "by", defaultValue = "status") String by,
-            @RequestParam(value = "status", defaultValue = "0") Integer status,
-            @RequestParam(value = "categoryId", defaultValue = "0") String categoryId,
-            @RequestParam(value = "tagId", defaultValue = "0") String tagId
+            @RequestParam("pageSize") Integer pageSize
+//            @RequestParam(value = "by", defaultValue = "status") String by,
+//            @RequestParam(value = "status", defaultValue = "0") Integer status,
+//            @RequestParam(value = "categoryId", defaultValue = "0") String categoryId,
+//            @RequestParam(value = "tagId", defaultValue = "0") String tagId
     ){
-        if(by.equals("status"))
-            return ResponseEntity.ok(JsonUtils.serialize(webService.getArticleList(page, pageSize)));
-        else if (by.equals("category")) {
-            return ResponseEntity.ok(JsonUtils.serialize(webService.getArticleByCategory(page, pageSize, categoryId)));
-        } else {
-            return ResponseEntity.ok(JsonUtils.serialize(webService.getArticleByTag(page, pageSize, tagId)));
+        ReturnJson returnJson = null;
+        returnJson = (ReturnJson) cacheService.getFromCommonCache("article_list_" + page + "_" + pageSize);
+        if (returnJson == null) {
+            returnJson = webService.getArticleList(page, pageSize);
+            cacheService.setCommonCache("article_list_" + page + "_" + pageSize, returnJson);
         }
+        return ResponseEntity.ok(JsonUtils.serialize(returnJson));
+//        if(by.equals("status"))
+//            return ResponseEntity.ok(JsonUtils.serialize(webService.getArticleList(page, pageSize)));
+//        else if (by.equals("category")) {
+//            return ResponseEntity.ok(JsonUtils.serialize(webService.getArticleByCategory(page, pageSize, categoryId)));
+//        } else {
+//            return ResponseEntity.ok(JsonUtils.serialize(webService.getArticleByTag(page, pageSize, tagId)));
+//        }
     }
 
     /*

@@ -3,7 +3,6 @@ package com.blog.item.service;
 import com.blog.common.back.*;
 import com.blog.item.mapper.*;
 import com.blog.item.pojo.*;
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -117,9 +116,10 @@ public class WebService {
 
     public ReturnJson getArticleList(Integer page, Integer pageSize){
         PageHelper.startPage(page, pageSize);
-        List<Article> list = articleMapper.queryArticleByPage(0);
+        List<Article> list = articleMapper.queryArticleByPage(page);
         List<ArticleMsg> articleMsgs = processWithArticle(list);
-        ListTemplate<List<ArticleMsg>> template = new ListTemplate<>(page, pageSize, articleMsgs.size(), articleMsgs);
+        ListTemplate<List<ArticleMsg>> template = new ListTemplate<>(page, pageSize,
+                articleMapper.queryNumByStatus(0), articleMsgs);
         return new ReturnJson<>(true, 200, "success", template);
 
     }
@@ -186,7 +186,8 @@ public class WebService {
 
     public ReturnJson getBlogInformation(){
         BlogInfo blogInfo = multiMapper.queryBlogInfo();
-        blogInfo.setArticleCount(articleMapper.queryNumByStatus(0));
+        int num = articleMapper.queryNumByStatus(0);
+        blogInfo.setArticleCount(num);
         blogInfo.setCategoryCount(categoryMapper.queryAllNum());
         blogInfo.setTagCount(tagMapper.queryAllNum());
         return new ReturnJson<>(true, 200, "seccess", blogInfo);
